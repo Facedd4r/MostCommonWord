@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Результаты поиска</title>
+</head>
+<body>
+    <h1>Самое частое слово</h1>
+    {% if word %} <! --шаблоны Jinja2-- !>
+        <p>Самое частое слово: <strong>{{ word }}</strong> встречается {{ frequency }} раз(а).</p>
+    {% else %} <! --strong для жирности-- !>
+        <p>Файл пуст или не содержит слов.</p>
+    {% endif %}
+    <a href="/index">Загрузить другой файл</a> <! --гиперссылка возврата в index.html-- !>
+</body>
+</html>
+
+<! --{{ url_for('index') }}-- !>
