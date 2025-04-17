@@ -31,7 +31,7 @@ class FlaskAppTests(unittest.TestCase):
         }
         response = self.app.post('/', data=data, content_type='multipart/form-data')
         self.assertEqual(response.status_code, 200)
-        self.assertIn("".encode('utf-8'), response.data)
+        self.assertIn("".encode('utf-8'), response.data) #response.data хранит тело HTTP‑ответа,
 
     def test_post_missing_file(self):
         # Отправляем POST-запрос без файла. Ожидаем, что сервер не вернёт статус 200.
