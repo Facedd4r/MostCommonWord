@@ -3,26 +3,25 @@ import io
 from main import app
 class FlaskAppTests(unittest.TestCase):
     def setUp(self):
-        self.app = app.test_client()
-        self.app.testing = True
+        self.app = app.test_client() #позволяет эмулировать HTTP‑запросы
+        self.app.testing = True #переводит приложение в режим тестирования
 
     def test_index_page_loads(self):
         # Тестируем GET-запрос к маршрутам "/" и "/index" и проверяем, что возвращается статус 200.
-        response_root = self.app.get('/')
+        response_root = self.app.get('/') #эмулирует GET‑запрос по URL /
         self.assertEqual(response_root.status_code, 200)
         response_index = self.app.get('/index')
         self.assertEqual(response_index.status_code, 200)
 
     def test_post_file_correct_decoding(self):
-        # Передаем файл с текстом "Hello hello world":
-        # ожидаем, что наиболее часто встречающееся слово - "hello", частота - 2.
+        #словарь data с кортежем
         data = {
             'file': (io.BytesIO(b"Hello hello world"), 'test.txt')
         }
+        #data=data передаем словарь
+        #content_type='multipart/form-data' указывает, что передается форма с файлом.
         response = self.app.post('/', data=data, content_type='multipart/form-data')
         self.assertEqual(response.status_code, 200)
-        # Предполагается, что шаблон result.html выводит результат,
-        # например, включает слово и частоту в каком-либо виде.
         self.assertIn("hello".encode('utf-8'), response.data)
         self.assertIn("2".encode('utf-8'), response.data)
 
