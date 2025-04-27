@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 from collections import Counter #для подсчёта частоты встречаемости слов в тексте.
+
 app = Flask(__name__)
 #если пользователь обращается по этим адресам
 @app.route('/')
@@ -13,7 +14,12 @@ def form():
         file = request.files["file"]
         if file: #если файл присутствует
             content = file.read().decode("utf-8")
-            words = content.split()
+            punctuation_chars = ['!', '"', '#', '$', '%', '&', "'", '(', ')', '*', '+', ',', '-', '.', '/',
+                                 ':', ';', '<', '=', '>', '?', '@', '[', '\\', ']', '^', '_', '`', '{', '|', '}', '~']
+            cleaned_content = ''.join([ch for ch in content if ch not in punctuation_chars])
+            #  join собирает полученный список символов обратно в строку.
+            # Разбиваем очищенный текст на слова (по пробельным символам)
+            words = cleaned_content.split()
             words = [word.lower() for word in words] #списочное выражение
             counter = Counter(words) #объект, хранящий сколько раз каждое слово встречается в тексте
             if counter: #если есть слова
