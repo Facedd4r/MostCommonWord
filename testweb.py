@@ -34,7 +34,7 @@ class FlaskAppTests(unittest.TestCase):
             response = self.app.post('/', data=data, content_type='multipart/form-data')
             self.assertEqual(response.status_code, 200)
             self.assertIn("видел".encode('utf-8'), response.data) # response.data хранит тело HTTP‑ответа
-            self.assertIn("3".encode('utf-8'), response.data)
+            self.assertIn("3".encode('utf-8'), response.data) #проверяет, находится ли элемент в контейнере
 
     def test_post_file_punctuation(self):
         with open('punctuation.txt', 'rb') as f:
